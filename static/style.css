@@ -1,0 +1,339 @@
+/*
+There's no real organization here, I mostly just wrote this steam of conciousness style.
+*/
+
+.app {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-navigation {
+    background-color: var(--c-gray5);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+.dashboard-navigation .logo {
+    height: 100%;
+
+}
+
+.dashboard-navigation-items {
+    list-style: none;
+    padding: 0 1rem;
+    margin: 0;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    color: var(--c-gray5);
+    display: flex;
+}
+.dashboard-navigation-items li {
+    margin: 0;
+    margin-left: 1rem;
+}
+.dashboard-navigation-items li:first-child {
+    margin-left: 0;
+}
+
+.onboarding-checklist {
+    padding: 1rem;
+    background-color: var(--c-gray5);
+}
+
+.onboarding-checklist-header {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.onboarding-checklist-byline {
+    margin-top: 0;
+}
+
+.onboarding-cards {
+    list-style: none;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.onboarding-card {
+
+}
+
+.onboarding-card-header {
+}
+
+.onboarding-nav-cta, .onboarding-nav-cta:hover {
+    margin: 2rem 0 0;
+    padding: 1rem;
+    background: var(--c-gray4);
+    display: block;
+    color: var(--c-text);
+    text-decoration: none;
+}
+.onboarding-nav-cta:hover {
+    background: var(--c-gray3);
+}
+
+
+
+.file-upload-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.fub-dropzone {
+    text-align: center;
+    padding: 5% 2rem;
+    width: 100%;
+    max-width: 45em;
+    border: 5px dashed var(--c-gray3);
+    border-radius: 5px;
+    color: var(--c-gray3);
+}
+
+.fub-or {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.fub-upload-form {
+    margin: 1rem 0;
+}
+
+.or-text {
+    margin: 0 1rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.or-line {
+    height: 1px;
+    background-color: var(--c-gray3);
+    width: 3rem;
+}
+
+.content-area {
+    padding: 1rem;
+
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+    padding: 1rem;
+}
+
+.analysis-inactive {
+    color: var(--c-gray3);
+}
+
+
+.onboarding-hello {
+    background-color: var(--c-gray5);
+    padding: 1rem;
+}
+
+.onboarding-hello-header {
+    font-size: var(--s-h3);
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+}
+
+.workspace-header .button {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+
+.library-search {
+    display: flex;
+    align-items: center;
+}
+.library-search-input {
+    margin: 0;
+}
+
+.library-search-icon {
+    line-height: 1;
+    margin-right: 0.5rem;
+    cursor: default;
+}
+
+.file-list {
+    margin: 0;
+    padding: 0;
+    border-collapse: separate;
+    border-spacing: 1.2rem 0.5rem;
+}
+
+.file-select label {
+    display: inline-block;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  .file-select input {
+    vertical-align: middle;
+  }
+  .file-select label span {
+    vertical-align: middle;
+  }
+
+.checkboxes label {
+    display: inline-block;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  .checkboxes input {
+    vertical-align: middle;
+  }
+  .checkboxes label span {
+    vertical-align: middle;
+  }
+
+.file-card-header {
+    font-size: var(--s-h4);
+}
+
+.file-list th {
+    color: var(--c-gray3);
+    text-align: left;
+}
+
+.fl-nowrap {
+    white-space: nowrap;
+}
+
+.a-delete {
+    color: var(--c-red1);
+}
+
+.breadcrumbs {
+    margin: 1em 0 0.2em;
+}
+
+.text-form {
+    max-width: 30em;
+}
+
+.text-form label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+legend {
+	padding: auto .5rem;
+}
+
+fieldset {
+	margin-top: 1rem;
+	padding: 2rem;
+	border: 1px solid var(--c-gray3);
+	border-radius: 4px;
+}
+
+.btw {
+    color: var(--c-gray3);
+}
+
+.file-attrs dt {
+    margin-bottom: 0.5em;
+}
+
+.progress {
+    border: 1px solid var(--c-gray-3);
+    background: var(--c-gray-3);
+    height: 1em;
+}
+.progress-bar {
+    background: var(--c-btn-1);
+    height: 100%;
+}
+
+.a-pulsing {
+    animation: opacityPulse 1s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.8; 
+}
+@keyframes opacityPulse {
+    0% {opacity: 0.8;}
+    50% {opacity: 1.0;}
+    100% {opacity: 0.8;}
+}
+
+
+.result-attrs dd {
+    margin-left: 0;
+}
+
+.file-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 0.5em;
+}
+
+.file-card {
+    background-color: var(--c-gray5);
+    border: 1px solid var(--c-gray4);
+    padding: 1.25em;
+}
+.file-card[data-selected=true] {
+    border: 1px solid var(--c-btn-1);
+}
+
+.file-card-title {
+    margin-top: 0;
+}
+
+.library-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.library-toolbar > * {
+    margin: 0.5rem;
+}
+
+.library-file-select {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+abbr[title], acronym[title] {
+    text-decoration: underline dotted var(--c-gray3);
+}
+
+.text-important {
+    font-size: var(--s-h3)
+}
+
+.flash-messages li {
+    display: block;
+    padding:  1em;
+    background-color: var(--c-gray5);
+}
+
+.flash-messages {
+  margin: 1em;
+  padding: 0;
+}
+
+input[type=search]:disabled, 
+input[type=text]:disabled {
+    background-color: var(--c-gray4);
+}

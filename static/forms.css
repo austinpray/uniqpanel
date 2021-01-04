@@ -1,0 +1,37 @@
+.registerForm {
+    background-color: var(--c-gray5);
+    padding: 2.8em;
+    max-width: 25em;
+    margin: 3em auto 1em;
+}
+
+.registerForm h1 {
+    margin-top: 0;
+}
+
+.errorlist {
+    margin-top: 0;
+    color: var(--c-red1);
+}
+
+.fieldWrapper label {
+    display: block;
+    margin-bottom: 0.25em;
+}
+
+.fieldWrapper input {
+    width: 100%;
+}
+
+.fieldHelp ul {
+    margin-top: 0;
+}
+
+.fieldSubmit {
+    margin-top: 1em;
+}
+
+.formLogo {
+    margin: 2.8em auto;
+    max-width: 7em;
+}

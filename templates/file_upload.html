@@ -1,0 +1,121 @@
+{% extends "dashboard_base.html" %}
+
+{% block main %}
+<div class="content-area">
+<div class="breadcrumbs">
+    <a href="/app">Dashboard</a>
+    <span style="color: var(--c-gray4)">/</span>
+</div>
+<h1 class="workspace-header" style="margin-top: 0;">
+Add File
+</h1>
+<div class="file-upload-box">
+    <form id="fileUpload" method="post" enctype="multipart/form-data" action="/app/api/files/upload" class="fub-upload">
+        {% csrf_token %}
+        <div data-state="step1" class="fub-upload-form">
+            <input 
+                class="fub-dropzone"
+                aria-label="choose files"
+                type="file"
+                accept="text/plain"
+                name="file"
+                required/>
+            <p style="margin-bottom: 0"><strong>Some ground rules:</strong></p>
+            <ul>
+                <li>🔒 We do not store the raw content of your files in any way</li>
+                <li>We only support newline delimited text files</li>
+                <li>Max file size is 2GiB</li>
+                <li>
+                If you need to upload larger files, please <a href="#" class="plz-subscrib">subscribe to our pro plan</a>.
+                <video class="meme" playsinline controls loop style="display: none">
+                    <source src="https://storage.googleapis.com/img.kaori.io/static/dbop.mp4" type="video/mp4">
+                </video>
+                </li>
+            </ul>
+        </div>
+        <div data-state="step2" style="display: none">
+            <div>
+                <strong><code data-file-attr="name">$FILE_NAME</code></strong> <button type="reset" style="background:var(--c-red1)">remove️</button>
+                <dl class="file-attrs">
+                    <dt><label for="fileName">Friendly name</label></dt>
+                    <dd><input type="text" id="fileName" name="fileName" placeholder="my friendly file"></dd>
+                    <dt>Type</dt>
+                    <dd data-file-attr="type">$TYPE</dd>
+                    <dt>Size</dt>
+                    <dd><span data-file-attr="size">$SIZE</span> bytes</dd>
+                </dl>
+            </div>
+            <div style="padding-bottom: 1.2em; position: relative;">
+                <button type="submit" style="margin-bottom: 0.25em">
+                    Upload File
+                </button>
+                <div class="progress" style="max-width: 20em">
+                    <div class="progress-bar"></div>
+                </div>
+                <div class="error" style="display: none; color: var(--c-red1);"></div>
+            </div>
+        </div>
+        <div data-state="finished" style="display: none; text-align: center;">
+            <p style="font-size: 4em; margin-bottom: 0;">✅</p>
+            <h2>Done!</h2>
+            <p>
+            <code data-result-attr="fileName">$FILE_NAME</code> was uploaded and analyzed successfully.
+            </p>
+            <dl class="result-attrs">
+                <dt>Unique lines</dt>
+                <dd data-result-attr="uniqueLines">$X</dd>
+                <dt>Analyzed lines</dt>
+                <dd data-result-attr="totalLines">$X</dd>
+                <dt>Elapsed time (nanoseconds)</dt>
+                <dd data-result-attr="elapsedTimeNs">$X</dd>
+            </dl>
+            <p>
+            <a href="/app" class="button">Dashboard</a>
+            <button class="b-default" type="reset">Upload another file</button>
+            </p>
+        </div>
+    </form>
+    <!-- shelving the below idea for a bit -->
+    <!--
+    <div class="fub-or">
+        <span class="or-line"></span>
+        <span class="or-text">or</span>
+        <span class="or-line"></span>
+    </div>
+    <div class="fub-generate">
+        <h2 id="generate">Generate some files</h2>
+        <p>
+        Boss needs you to count some lines in some files in a hurry? Lacking files of your own?
+        We got your back.
+        </p>
+        <form class="text-form">
+        <label for="numFiles">
+        Number of files (10 max):<br>
+        <input type="number" id="numFiles" min="1" max="10" value="1" required>
+        </label>
+
+        <label for="numLines">
+        Lines per file (10,000 max):<br>
+        <input type="number" id="numLines" min="1" max="10000" value="100" required>
+        </label>
+
+        <fieldset>
+        <legend>Naming</legend>
+        <label for="namePrefix">
+        Prefix:<br>
+        <input id="namePrefix" type="text" placeholder="prefix-">
+        </label>
+
+        <label for="namePrefix">
+        Suffix:<br>
+        <input id="nameSuffix" type="text" placeholder=".txt">
+        </label>
+        </fieldset>
+        <br>
+        <button type="submit">Create Files</button>
+        </form>
+    </div>
+    -->
+</div>
+</div>
+{% endblock %}

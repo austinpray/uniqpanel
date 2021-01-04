@@ -1,0 +1,38 @@
+{% extends "registration/base.html" %}
+
+{% block navigation %}
+{% endblock %}
+
+{% load static %}
+
+{% block main %}
+<div class="formLogo">
+<a href="/">
+<img src="{% static "uniqpanel-logo.svg" %}" alt="uniqpanel">
+</a>
+</div>
+<div class="registerForm">
+    <h1>Create your account</h1>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+            {{ form.password.help_text }}
+            {{ form.password.errors }}
+        </div>
+        <p class="fieldSubmit">
+            <button type="submit">Sign Up</button>
+        </p>
+        <p>
+            Already have an account? <a href="/accounts/login">Log In</a>
+        </p>
+    </form>
+</div>
+{% endblock %}

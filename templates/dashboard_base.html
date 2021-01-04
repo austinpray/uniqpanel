@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block critical %}
+<link rel="stylesheet" href="{% static 'style.css' %}" />
+<script src="{% static 'app.js' %}" type="module" async></script>
+{% endblock%}
+
+{% block navigation %}
+<div class="dashboard-navigation">
+    <a href="/app" class="logo">
+        <img class="logo-img" src="{% static 'uniqpanel-logo.svg' %}" alt="uniqpanel" />
+    </a>
+    <ul class="dashboard-navigation-items">
+        <li><a href="/app">dashboard</a></li>
+        <li class="btw">&bull;</li>
+        <li><a href="/accounts/logout">log out</a></li>
+    </ul>
+    <!--
+    <a href="#" class="onboarding-nav-cta">
+        <strong>Getting Started</strong>
+        <br>
+        <small>3 remaining tasks</small>
+    </a>
+    -->
+</div>
+{% endblock %}

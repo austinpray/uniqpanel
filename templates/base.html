@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>uniqpanel - {% block title %}Count unique lines in files{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+/* critical css */
+:root {
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --c-bg: #1a1b1e;
+    --c-text: #fff;
+    --c-link-1: #079adc;
+    --c-link-2: #85b9ff;
+    --c-btn-1: #0876cc;
+    --c-red1: #ff8166;
+    --c-gray1: #f6f6f6;
+    --c-gray2: #e9e9e9;
+    --c-gray3: #8f8f91;
+    --c-gray4: #626266;
+    --c-gray5: #2a2a2f;
+	--s-h1: 2.25rem;
+	--s-h2: 1.85rem;
+	--s-h3: 1.55rem;
+	--s-h4: 1.25rem;
+	--s-h5: 1rem;
+	--s-h6: .875rem;
+}
+html,input,select,button {
+    font-family: var(--font-sans);
+    color: var(--c-text);
+}
+
+h4,
+h5,
+h6 {
+	margin-bottom: .3rem;
+}
+
+h1 {
+	font-size: var(--s-h1);
+}
+
+h2 {
+	font-size: var(--s-h2);
+}
+
+h3 {
+	font-size: var(--s-h3);
+}
+
+h4 {
+	font-size: var(--s-h4);
+}
+
+h5 {
+	font-size: var(--s-h5);
+}
+
+h6 {
+	font-size: var(--s-h6);
+}
+
+
+.app {
+    margin: 0 auto;
+    max-width: 79.75rem;
+    padding: 0.5rem;
+}
+html {
+    background-color: var(--c-bg);
+    height: 100%;
+}
+body {
+    margin: 0;
+    height: 100%;
+}
+a {
+	color: var(--c-link-1);
+    text-decoration: none;
+}
+a:hover {
+	color: var(--c-link-2);
+    text-decoration: underline;
+}
+
+.button, .button:hover,
+a button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+    font-family: var(--font-mono);
+    font-size: 1em;
+    text-transform: uppercase;
+    background-color: var(--c-btn-1);
+    color: var(--c-text);
+    text-decoration: none;
+    padding: 0.3em 1em;
+    display: inline-block;
+    border-width: 0;
+    border-radius: 1.5em;
+    line-height: 1.6;
+    vertical-align: baseline;
+}
+
+.b-default {
+    background-color: var(--c-gray4);
+}
+
+
+.button:focus,
+.button:enabled:hover,
+button:focus,
+button:enabled:hover,
+input[type="submit"]:focus,
+input[type="submit"]:enabled:hover,
+input[type="reset"]:focus,
+input[type="reset"]:enabled:hover,
+input[type="button"]:focus,
+input[type="button"]:enabled:hover {
+    background-color: var(--c-link-1);
+}
+
+a button[disabled],
+button[disabled],
+input[type="submit"][disabled],
+input[type="reset"][disabled],
+input[type="button"][disabled] {
+	cursor: default;
+	opacity: .5;
+
+	cursor: not-allowed;
+}
+
+textarea,
+select,
+input {
+	padding: 6px 12px;
+	margin-bottom: .5rem;
+	background: var(--c-bg);
+	color: var(--c-text);
+	border: 1px solid var(--c-gray3);
+	border-radius: 4px;
+	box-shadow: none;
+	box-sizing: border-box;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.navigation-items {
+    flex-grow: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    color: var(--c-gray4);
+    margin-left: 1rem;
+}
+.navigation-items li {
+    margin-left: 1rem;
+}
+.navigation-items li:first-child {
+    margin-left: 0;
+}
+
+.logo {
+    display: block;
+    color: var(--c-text);
+    text-decoration: none;
+    width: 6rem;
+    height: 3.75rem;
+}
+
+.logo-img {
+    object-fit: contain;
+    object-position: left;
+    width: 100%;
+    height: 100%;
+}
+    </style>
+    {% block critical %}{% endblock %}
+</head>
+
+<body>
+{% load static %}
+{% autoescape on %}
+<div class="app">
+    {% block navigation %}
+    <div class="navigation">
+        <a href="/" class="logo">
+            <img class="logo-img" src="{% static 'uniqpanel-logo.svg' %}" alt="uniqpanel" />
+        </a>
+        {% block navigation_items %}
+        <ul class="navigation-items">
+            <li><a href="/pricing">pricing</a></li>
+            <li>&bull;</li>
+            <li><a href="/accounts/login">log in</a></li>
+            <li><a class="button" href="/accounts/register">sign up</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+    {% endblock %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for message in messages %}
+        <li{% if message.tags %} {% comment %}  {% endcomment %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="main">
+        {% block main %}{% endblock %}
+    </div>
+</div>
+</body>
+{% endautoescape %}
+</html>
