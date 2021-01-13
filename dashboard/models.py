@@ -5,6 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
 
@@ -28,6 +29,7 @@ class UserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
 
+
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
@@ -40,9 +42,11 @@ class User(AbstractUser):
     def __str__(self):
         return f'<User {self.email}>'
 
+
 class FileAnalysisJob(models.Model):
 
-    completed_at_default = timezone.make_aware(timezone.datetime.min, timezone.get_default_timezone())
+    completed_at_default = timezone.make_aware(
+        timezone.datetime.min, timezone.get_default_timezone())
 
     created_at = models.DateTimeField(auto_now_add=True)
     display_name = models.CharField(max_length=255)
@@ -58,7 +62,7 @@ class FileAnalysisJob(models.Model):
 
     def __str__(self):
         return f"File({self.id}, {self.display_name})"
-    
+
     @classmethod
     def create(cls, **kwargs):
         f = cls(**kwargs)
@@ -67,7 +71,7 @@ class FileAnalysisJob(models.Model):
             f.display_name = f.file_name
 
         return f
-    
+
     @classmethod
     def complete_jobs(cls):
         return cls.objects.filter(elapsed_time_ns__gt=0)

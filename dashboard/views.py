@@ -29,18 +29,22 @@ def register(req):
                 password=form.cleaned_data['password'],
             )
             login(req, new_user)
-            messages.info(req, mark_safe("<strong>Thank you for signing up!</strong> You should start by <a href='/app/new'>adding a file</a>."))
+            messages.info(req, mark_safe(
+                "<strong>Thank you for signing up!</strong> You should start by <a href='/app/new'>adding a file</a>."))
             return redirect('/app')
 
     return render(req, 'registration/register.html', {'form': form})
+
 
 @login_required
 def index(req):
     return render(req, 'dashboard_index.html')
 
+
 @login_required
 def new(req):
     return render(req, 'file_upload.html')
+
 
 @login_required
 def analyze(req):
@@ -53,9 +57,11 @@ def analyze(req):
         }
     )
 
+
 def _merge_files(req):
     requested_job_ids = set(int(i) for i in req.GET.getlist('id'))
     start = time.perf_counter_ns()
+
     def get_elapsed_time(start):
         elapsed_ns = time.perf_counter_ns() - start
         return {
@@ -97,7 +103,7 @@ def _merge_files(req):
             if redis.exists(merge_key) == 0:
                 if not redis.pfmerge(merge_key, *hll_keys):
                     return _api_error("could not merge hll keys", status=500)
-            
+
                 redis.expire(merge_key, timedelta(days=1))
 
             return {
@@ -107,6 +113,7 @@ def _merge_files(req):
             }
 
 # half-assed rest API follows
+
 
 def _require_auth(func):
     """
@@ -122,6 +129,7 @@ def _require_auth(func):
 
 def _api_error(msg: str, **kwargs):
     return JsonResponse({'error': msg}, **kwargs)
+
 
 @_require_auth
 def list_files(req):
@@ -182,7 +190,7 @@ def upload(req):
 
     f.save()
 
-    f.redis_key=f'uniqpanel/hll/file-{f.id}'
+    f.redis_key = f'uniqpanel/hll/file-{f.id}'
 
     with get_redis_connection("default") as redis:
 
@@ -200,9 +208,9 @@ def upload(req):
             if len(line) > 255:
                 return _api_error('maximum line length is 255 chars', status=400)
 
-            #try:
+            # try:
             #    line = str(line, 'utf-8')
-            #except UnicodeError:
+            # except UnicodeError:
             #    return _api_error('file is not unicode', status=400)
 
             line_buf.append(line)
@@ -228,4 +236,3 @@ def upload(req):
     return JsonResponse({
         "file": f.json_dict()
     })
-

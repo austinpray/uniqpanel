@@ -9,7 +9,7 @@ SEED = 123
 
 def gen_corpus(N, seed):
     rnd = random.Random()
-    #rnd.seed(seed)
+    # rnd.seed(seed)
 
     corpus = []
     while len(set(corpus)) != NUM_UNIQUE:

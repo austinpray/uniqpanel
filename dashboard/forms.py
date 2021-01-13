@@ -9,6 +9,7 @@ from .models import User
 
 _password_validation_html = password_validation.password_validators_help_text_html()
 
+
 class UserCreationForm(ModelForm):
 
     error_messages = {
@@ -17,8 +18,10 @@ class UserCreationForm(ModelForm):
     password = forms.CharField(
         label=_("Password"),
         strip=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'placeholder': 'Create a password'}),
-        help_text=mark_safe(f'<div class="fieldHelp">{_password_validation_html}</div>'),
+        widget=forms.PasswordInput(
+            attrs={'autocomplete': 'new-password', 'placeholder': 'Create a password'}),
+        help_text=mark_safe(
+            f'<div class="fieldHelp">{_password_validation_html}</div>'),
     )
 
     class Meta:

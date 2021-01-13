@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import FileAnalysisJob
 
+
 class ReadOnlyModelAdmin(admin.ModelAdmin):
     """
     ModelAdmin class that prevents modifications through the admin.
@@ -26,5 +27,6 @@ class ReadOnlyModelAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
 
 admin.site.register(FileAnalysisJob, ReadOnlyModelAdmin)
