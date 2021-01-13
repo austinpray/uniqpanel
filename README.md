@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="static/uniqpanel-logo.svg" width="200" height="200">
+  <img src="static/uniqpanel-logo-readme.svg" width="200" height="200">
   <p>
   <strong>Finally, a way to count the distinct lines amongst files.</strong>
   </p>
