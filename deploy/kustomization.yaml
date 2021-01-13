@@ -12,7 +12,7 @@ secretGenerator:
   name: uniqpanel-env
 
 images:
-- name: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/app
-  newTag: mvp-24a215cb305b21ed733fd8c502e7690c19fcb2d8
-- name: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/nginx
-  newTag: mvp-24a215cb305b21ed733fd8c502e7690c19fcb2d8
+- digest: sha256:ccbdd475bf9d06439f62062091280cceceacfa688cbefb5ad093799dd6e8beb6
+  name: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/app
+- digest: sha256:b581ac8be1be3101ceeefb65051f27dadb82eaf17e45282ca3b1fa5dbfe02e04
+  name: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/nginx

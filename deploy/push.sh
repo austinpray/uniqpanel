@@ -16,6 +16,6 @@ cd "$BASEDIR"
 docker push "$UNIQP_APP_CONTAINER_NAME"
 docker push "$UNIQP_NGINX_CONTAINER_NAME"
 
-kustomize edit set image "$UNIQP_APP_CONTAINER_NAME"
-kustomize edit set image "$UNIQP_NGINX_CONTAINER_NAME"
+kustomize edit set image "$(docker inspect --format='{{index .RepoDigests 0}}' $UNIQP_APP_CONTAINER_NAME)"
+kustomize edit set image "$(docker inspect --format='{{index .RepoDigests 0}}' $UNIQP_NGINX_CONTAINER_NAME)"
 
