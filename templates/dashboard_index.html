@@ -1,0 +1,70 @@
+{% extends "dashboard_base.html" %}
+
+{% block main %}
+<!--
+<div class="onboarding-checklist">
+    <h1 class="onboarding-checklist-header">Getting started</h1>
+    <p class="onboarding-checklist-byline">3 tasks remaining</p>
+    <ol class="onboarding-cards">
+        <li class="onboarding-card">
+            <h2 class="onboarding-card-header">Upload some files</h2>
+            <p class="onboarding-card-desc">
+            
+            </p>
+            <a href="#">
+            Let's go
+            </a>
+        </li>
+    </ol>
+</div>
+-->
+<!--
+<div class="onboarding-hello">
+<h1 class="onboarding-hello-header">🎉 Welcome to uniqpanel!</h1>
+<p>You should start by adding some files to your File Library. Once you have some files loaded, you can get started with your important counting work.</p>
+<p><a href="#">Show me how</a>
+</div>
+-->
+<div class="workspace">
+    <div class="file-library">
+        <h1 class="workspace-header">
+                <span>
+                    File Library
+                    <!--<button style="font-size: 0.7rem;" class="b-default">❔</button>-->
+                </span>
+            <a href="/app/new" class="button">Add file</a>
+        </h1>
+        <form method="GET" action="/app/analyze" id="fileLibrary">
+            <div class="library-toolbar">
+                <div class="library-file-select">
+                    <label>
+                        <input data-select-all type="checkbox" disabled>
+                        <span data-num-selected>0</span> Files selected
+                    </label>
+                    <span>&nbsp;</span>
+                    <button type="submit" data-analyze-button style="font-size: 80%" disabled>Analyze</button>
+                </div>
+                <div class="library-search">
+                    <label for="librarySearch" class="library-search-icon" alria-label="search">🔍</label>
+                    <input id="librarySearch" data-search-input type="search" class="library-search-input" disabled>
+                </div>
+            </div>
+            <div>
+                <span data-loader class="loader a-pulsing">Loading...</span>
+                <span data-flash-error class="flash-error" style="display: none">Something went wrong... try again?</span>
+            </div>
+            <div data-file-list class="file-list">
+            </div>
+            <div style="text-align: center;">
+            <p><button type="button" data-show-more class="b-default" style="display: none">Show more</button></p>
+            </div>
+            <div data-no-files-yet style="display: none">
+                <h3 class="workspace-header">No files yet!</h1>
+                <p>
+                    You need to <a href="/app/new">upload some files</a> to analyze.
+                </p>
+            </p>
+            </div>
+    </div>
+</div>
+{% endblock %}

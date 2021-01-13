@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: uniqpanel
+resources:
+- namespace.yaml
+- deployment.yaml
+
+secretGenerator:
+- envs:
+  - .env.production
+  name: uniqpanel-env
+
+images:
+- name: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/app
+  newTag: mvp-24a215cb305b21ed733fd8c502e7690c19fcb2d8
+- name: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/nginx
+  newTag: mvp-24a215cb305b21ed733fd8c502e7690c19fcb2d8

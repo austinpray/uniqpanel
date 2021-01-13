@@ -1,0 +1,99 @@
+version: '3.7'
+
+x-uniqpanel:
+  &uniqpanel
+  build:
+    context: .
+    target: production
+  image: "${UNIQP_APP_CONTAINER_NAME:-austinpray/uniqpanel/uniqpanel/app}"
+  env_file: .env
+  environment:
+    &uniqpanel_env
+    UNIQP_DATABASE_URL: postgresql://uniqpanel:uniqpanel@db:5432/uniqpanel
+    UNIQP_REDIS_URL: redis://redis:6379/
+  volumes:
+    - .:/app
+    - /app/.venv # hide .venv
+
+x-db:
+  &db
+  image: postgres:9.6
+  environment:
+    POSTGRES_DB: uniqpanel
+    POSTGRES_PASSWORD: uniqpanel
+    POSTGRES_USER: uniqpanel
+
+x-redis:
+  &redis
+  image: redis:5
+
+services:
+  db:
+    <<: *db
+    volumes:
+      - "db:/var/lib/postgresql/data"
+    ports:
+      - "4444:5432"
+
+  redis:
+    <<: *redis
+    volumes:
+      - "redis:/data"
+
+  uniqpanel:
+    <<: *uniqpanel
+    depends_on:
+      - db
+      - redis
+    command: ["python", "./manage.py", "runserver", "0.0.0.0:8000"]
+    ports:
+      - 8000:8000
+
+  uniqpanel-prod:
+    <<: *uniqpanel
+    depends_on:
+      - db
+      - redis
+    command: ["gunicorn", "-c", "python:uniqpanel.gunicorn", "uniqpanel.wsgi"]
+    environment:
+      <<: *uniqpanel_env
+      UNIQP_ALLOWED_HOSTS: "uniqpanel-prod"
+      UNIQP_DEBUG: "0"
+    restart: on-failure
+    volumes: []
+    ports:
+      - 8001:8001
+
+  nginx-prod:
+    build: containers/nginx
+    image: "${UNIQP_NGINX_CONTAINER_NAME:-austinpray/uniqpanel/uniqpanel/nginx}"
+    depends_on:
+      - uniqpanel-prod
+    environment:
+      NGINX_PROXY_PASS: uniqpanel-prod:8001
+    ports:
+      - 8080:80
+
+
+  db-test:
+    <<: *db
+    ports:
+      - "5555:5432"
+
+  redis-test:
+    <<: *redis
+
+  test: &test
+    <<: *uniqpanel
+    image: austinpray/uniqpanel/debug
+    environment:
+      UNIQP_DATABASE_URL: postgresql://uniqpanel:uniqpanel@db-test:5432/uniqpanel
+      UNIQP_REDIS_URL: redis://redis-test:6379/
+    build:
+      context: .
+      target: development
+    command: ["pytest"]
+
+volumes:
+  db:
+  redis:

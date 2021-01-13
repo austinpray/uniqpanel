@@ -1,0 +1,47 @@
+{% extends "registration/base.html" %}
+
+{% block navigation %}
+{% endblock %}
+
+{% load static %}
+
+{% block main %}
+<div class="formLogo">
+<a href="/">
+<img src="{% static "uniqpanel-logo.svg" %}" alt="uniqpanel">
+</a>
+</div>
+<div class="registerForm">
+    <h1>Log in</h1>
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+        {% else %}
+        <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            <label for="{{ form.username.id_for_label }}">Email</label>
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+            {{ form.password.errors }}
+        </div>
+        <p>
+            <input type="submit" value="log in">
+            <input type="hidden" name="next" value="{{ next }}">
+        </p>
+        <p>
+            Don't have an account? <a href="/accounts/register">Sign Up</a>
+        </p>
+    </form>
+</div>
+{% endblock %}

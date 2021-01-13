@@ -1,0 +1,29 @@
+{% extends "registration/base.html" %}
+
+{% block critical %}
+<style>
+.space-cowboy {
+    font-size: 4vw;
+    font-family: var(--font-serif);
+    text-transform: uppercase;
+    text-align: right;
+    white-space: nowrap;
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    margin: 0;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<h1 style="color: var(--c-gray3)">Logged out</h1>
+<style>
+</style>
+<p class="space-cowboy">
+<em>See you space cowboy...</em>
+</p>
+<p>
+<a href="{% url 'login' %}"><strong>Log in again</strong></a>
+</p>
+{% endblock %}

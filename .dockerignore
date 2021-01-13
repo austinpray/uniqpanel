@@ -1,0 +1,13 @@
+*
+
+!/dashboard
+!/marketing
+!/static
+!/staticfiles
+!/templates
+!/uniqpanel
+!manage.py
+!poetry.lock
+!pyproject.toml
+
+*.pyc

@@ -1,0 +1,146 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app
+  name: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: uniqpanel
+        effect: NoSchedule
+      nodeSelector:
+          dedicated: uniqpanel
+      containers:
+        - name: app
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "245Mi"
+            limits:
+              cpu: "2"
+              memory: "1G"
+          env:
+            - name: PORT
+              value: "8001"
+            - name: UNIQP_APP_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: UNIQP_DEBUG
+              value: "1"
+            - name: UNIQP_ALLOWED_HOSTS
+              value: "www.uniqpanel.app,uniqpanel.app,$(NGINX_SERVICE_HOST),127.0.0.1"
+            - name: UNIQP_ALLOWED_CIDR
+              value: "$(UNIQP_APP_POD_IP)/20,$(NGINX_SERVICE_HOST)/20"
+          envFrom:
+            - secretRef:
+                name: uniqpanel-env
+          # TODO: pin this and enable automated deploys
+          image: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/app:PLACEHOLDER
+          imagePullPolicy: Always
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+spec:
+  selector:
+    app: app
+  ports:
+    - protocol: TCP
+      port: 8001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: uniqpanel
+        effect: NoSchedule
+      nodeSelector:
+          dedicated: uniqpanel
+      containers:
+        - name: nginx
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "245Mi"
+            limits:
+              cpu: "2"
+              memory: "1G"
+          env:
+            - name: NGINX_PROXY_PASS
+              value: app.uniqpanel.svc.cluster.local:8001
+          envFrom:
+            - secretRef:
+                name: uniqpanel-env
+          # TODO: pin this and enable automated deploys
+          image: us.gcr.io/kizuna-188702/github.com/austinpray/uniqpanel/nginx:PLACEHOLDER
+          imagePullPolicy: Always
+      restartPolicy: Always
+
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: uniqpanel-dot-app
+spec:
+  domains:
+    - uniqpanel.app
+    - www.uniqpanel.app
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "nginx"
+  labels:
+    app: "nginx"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 80
+  selector:
+    app: "nginx"
+  type: "NodePort"
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: uniqpanel-dot-app
+    networking.gke.io/managed-certificates: uniqpanel-dot-app
+spec:
+  backend:
+    serviceName: nginx
+    servicePort: 80

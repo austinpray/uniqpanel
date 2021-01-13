@@ -1,0 +1,33 @@
+server {
+    # use 'listen 80 deferred;' for Linux
+    # use 'listen 80 accept_filter=httpready;' for FreeBSD
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+
+    client_max_body_size 2G;
+
+    keepalive_timeout 5;
+
+    # path for static files
+    root /app/.static-cache;
+
+    location / {
+        # checks for static file, if not found proxy to app
+        try_files $uri @proxy_to_app;
+    }
+
+    location @proxy_to_app {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        # we don't want nginx trying to do something clever with
+        # redirects, we set the Host: header above already.
+        proxy_redirect off;
+        proxy_pass http://${NGINX_PROXY_PASS};
+
+        proxy_read_timeout 300s;
+    }
+
+}
