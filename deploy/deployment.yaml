@@ -141,7 +141,8 @@ kind: BackendConfig
 metadata:
   name: nginx-backendconfig
 spec:
-  timeoutSec: 300
+  # 1 hour lol, uploads
+  timeoutSec: 3600
   connectionDraining:
     drainingTimeoutSec: 60
 

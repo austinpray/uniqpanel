@@ -27,7 +27,8 @@ server {
         proxy_redirect off;
         proxy_pass http://${NGINX_PROXY_PASS};
 
-        proxy_read_timeout 300s;
+        # 1 hour for big uploads lol
+        proxy_read_timeout 3600s;
     }
 
 }
