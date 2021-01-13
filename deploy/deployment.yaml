@@ -125,6 +125,8 @@ metadata:
   name: "nginx"
   labels:
     app: "nginx"
+  annotations:
+    cloud.google.com/backend-config: '{"default": "nginx-backendconfig"}'
 spec:
   ports:
   - protocol: "TCP"
@@ -132,12 +134,24 @@ spec:
   selector:
     app: "nginx"
   type: "NodePort"
+
+---
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  name: nginx-backendconfig
+spec:
+  timeoutSec: 300
+  connectionDraining:
+    drainingTimeoutSec: 60
+
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: nginx
   annotations:
+    kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.global-static-ip-name: uniqpanel-dot-app
     networking.gke.io/managed-certificates: uniqpanel-dot-app
 spec:
